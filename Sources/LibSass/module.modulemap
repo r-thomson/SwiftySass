@@ -1,0 +1,4 @@
+module CLibSass {
+	header "/usr/local/include/sass.h"
+	export *
+}
