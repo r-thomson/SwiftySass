@@ -7,7 +7,16 @@ final class SwiftySassTests: XCTestCase {
 		XCTAssertEqual(SwiftySass.sassLanguageVersion, "3.5")
 	}
 	
+	func testAccessTestResources() {
+		XCTAssert(try TestResources.resourceDirectory.checkResourceIsReachable())
+		
+		let textFileURL = TestResources.url(forResourceAtPath: "hello.txt")
+		let textFileContents = try? String(contentsOf: textFileURL)
+		XCTAssertEqual(textFileContents, "Hello.\n")
+	}
+	
 	static var allTests = [
 		("testVersionNumbers", testVersionNumbers),
+		("testAccessTestResources", testAccessTestResources),
 	]
 }
