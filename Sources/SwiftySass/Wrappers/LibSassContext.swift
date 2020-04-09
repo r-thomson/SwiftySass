@@ -1,11 +1,15 @@
 import CLibSass
 
-protocol LibSassContext {
-	func compile() throws -> String
-}
-
-private extension LibSassContext {
-	func getOutput(context: OpaquePointer) throws -> String {
+class LibSassContext {
+	fileprivate var context: OpaquePointer
+	
+	fileprivate init(context: OpaquePointer) {
+		self.context = context
+	}
+	
+	func compile() throws -> String {
+		// Make sure that one of the compiler functions is called first
+		
 		guard sass_context_get_error_status(context) == 0 else {
 			throw SassCompilerError(
 				message: String(cString: sass_context_get_error_message(context)),
@@ -19,17 +23,16 @@ private extension LibSassContext {
 	}
 }
 
-class LibSassDataContext: LibSassContext {
-	private var context: OpaquePointer
-	
+/// Wrapper around LibSass' `Sass_Data_Context` struct
+final class LibSassDataContext: LibSassContext {
 	init(sourceString: String) {
 		let buffer = sass_copy_c_string(sourceString)
-		context = sass_make_data_context(buffer)
+		super.init(context: sass_make_data_context(buffer))
 	}
 	
-	func compile() throws -> String {
+	override func compile() throws -> String {
 		sass_compile_data_context(context)
-		return try getOutput(context: context)
+		return try super.compile()
 	}
 	
 	deinit {
@@ -37,17 +40,16 @@ class LibSassDataContext: LibSassContext {
 	}
 }
 
-class LibSassFileContext: LibSassContext {
-	private var context: OpaquePointer
-	
+/// Wrapper around LibSass' `Sass_File_Context` struct
+final class LibSassFileContext: LibSassContext {
 	init(inputPath: String) {
 		let buffer = sass_copy_c_string(inputPath)
-		context = sass_make_file_context(buffer)
+		super.init(context: sass_make_file_context(buffer))
 	}
 	
-	func compile() throws -> String {
+	override func compile() throws -> String {
 		sass_compile_file_context(context)
-		return try getOutput(context: context)
+		return try super.compile()
 	}
 	
 	deinit {
