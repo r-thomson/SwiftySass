@@ -9,7 +9,7 @@ public struct SwiftySass {
 		return String(cString: libsass_language_version())
 	}
 	
-	public static func render(source: String) throws -> String {
+	public static func compile(source: String) throws -> String {
 		let context = LibSassDataContext(sourceString: source)
 		return try context.compile()
 	}
