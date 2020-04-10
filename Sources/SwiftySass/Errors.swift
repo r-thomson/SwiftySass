@@ -17,7 +17,7 @@ public struct SassCompilerError: Error {
 	/// ```
 	/// Undefined variable: "$notDefined".
 	/// ```
-	public let issue: String
+	public let description: String
 	
 	/// File where the error occurred
 	public let filename: String
