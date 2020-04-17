@@ -16,12 +16,7 @@ public func compileSass(source: String) throws -> String {
 	return try context.compile()
 }
 
-public func compileSass(filePath: String) throws -> String {
-	let context = LibSassFileContext(inputPath: filePath)
-	return try context.compile()
-}
-
 public func compileSass(fileURL: URL) throws -> String {
-	let path = fileURL.path
-	return try compileSass(filePath: path)
+	let context = LibSassFileContext(inputPath: fileURL.path)
+	return try context.compile()
 }
