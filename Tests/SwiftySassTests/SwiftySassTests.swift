@@ -1,5 +1,5 @@
 import XCTest
-@testable import SwiftySass
+import SwiftySass
 
 final class SwiftySassTests: XCTestCase {
 	func testVersionNumbers() {
@@ -15,8 +15,48 @@ final class SwiftySassTests: XCTestCase {
 		XCTAssertEqual(textFileContents, "Hello.\n")
 	}
 	
-	static var allTests = [
-		("testVersionNumbers", testVersionNumbers),
-		("testAccessTestResources", testAccessTestResources),
-	]
+	func testCompileSourceString() {
+		let scss = """
+		nav {
+		  ul {
+		    margin: 0;
+		    padding: 0;
+		    list-style: none;
+		  }
+		
+		  a {
+		    text-decoration: none;
+		  }
+		}
+		"""
+		
+		let targetCSS = """
+		nav ul {
+		  margin: 0;
+		  padding: 0;
+		  list-style: none; }
+
+		nav a {
+		  text-decoration: none; }
+		
+		"""
+		
+		XCTAssertEqual(try compileSass(source: scss), targetCSS)
+	}
+	
+	func testCompilerError() {
+		let scss = """
+		body {
+			color: $red;
+		}
+		"""
+		
+		XCTAssertThrowsError(try SwiftySass.compileSass(source: scss)) { error in
+			guard let error = error as? SassCompilerError else { return XCTFail() }
+			
+			XCTAssertEqual(error.description, "Undefined variable: \"$red\".")
+			XCTAssertEqual(error.line, 2)
+			XCTAssertEqual(error.column, 9)
+		}
+	}
 }
