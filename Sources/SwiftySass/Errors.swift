@@ -20,7 +20,7 @@ public struct SassCompilerError: Error {
 	public let description: String
 	
 	/// File where the error occurred
-	public let filename: String
+	public let filename: String?
 	
 	/// Line position of the error in `filename`
 	public let line: Int

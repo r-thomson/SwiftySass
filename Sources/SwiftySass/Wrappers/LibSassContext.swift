@@ -12,7 +12,7 @@ class LibSassContext {
 			throw SassCompilerError(
 				message: String(cString: sass_context_get_error_message(context)),
 				description: String(cString: sass_context_get_error_text(context)),
-				filename: String(cString: sass_context_get_error_file(context)),
+				filename: sass_context_get_error_file(context).map({ String(cString: $0) }),
 				line: sass_context_get_error_line(context),
 				column: sass_context_get_error_column(context))
 		}
