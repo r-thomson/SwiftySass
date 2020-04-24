@@ -2,6 +2,9 @@
 
 A [LibSass](https://github.com/sass/libsass) wrapper for Swift.
 
+[![Latest version](https://img.shields.io/github/v/tag/r-thomson/SwiftySass?sort=semver&label=Latest&style=for-the-badge)](https://github.com/r-thomson/SwiftySass/releases)
+[![Test status](https://img.shields.io/github/workflow/status/r-thomson/SwiftySass/Swift?label=Tests&style=for-the-badge)](https://github.com/r-thomson/SwiftySass/actions)
+
 This project is not yet finished, so some features are not yet supported:
 
 - Compiler configuration
