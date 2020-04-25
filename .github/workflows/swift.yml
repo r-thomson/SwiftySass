@@ -2,7 +2,12 @@ name: Swift
 
 on:
   push:
+    paths:
+      - 'Package.swift'
+      - 'Sources/**'
+      - 'Tests/**'
     branches: [ master ]
+
   pull_request:
     branches: [ master ]
 
