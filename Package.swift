@@ -12,12 +12,12 @@ let package = Package(
 	targets: [
 		.target(
 			name: "SwiftySass",
-			dependencies: ["LibSass"]),
+			dependencies: ["CLibSass"]),
 		.testTarget(
 			name: "SwiftySassTests",
 			dependencies: ["SwiftySass"]),
 		.systemLibrary(
-			name: "LibSass",
+			name: "CLibSass",
 			pkgConfig: "libsass",
 			providers: [
 				.brew(["libsass"]),
