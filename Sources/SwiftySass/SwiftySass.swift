@@ -15,16 +15,16 @@ public var sassLanguageVersion: String {
 /// - Parameter source: Sass source code to compile.
 /// - Throws: `SassCompilerError` if there is an error when compiling.
 /// - Returns: The compiled CSS as a String.
-public func compileSass(source: String) throws -> String {
-	let context = LibSassDataContext(sourceString: source)
+public func compileSass(fromSource source: String) throws -> String {
+	let context = SassDataContext(sourceString: source)
 	return try context.compile()
 }
 
 /// Compiles the file at URL and returns the compiled output as a String.
-/// - Parameter fileURL: Sass source code to compile.
+/// - Parameter file: Sass source code to compile.
 /// - Throws: `SassCompilerError` if there is an error when compiling.
 /// - Returns: The compiled CSS as a String.
-public func compileSass(fileURL: URL) throws -> String {
-	let context = LibSassFileContext(inputPath: fileURL.path)
+public func compileSass(fromFile file: URL) throws -> String {
+	let context = SassFileContext(inputPath: file.path)
 	return try context.compile()
 }
