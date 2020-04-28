@@ -1,10 +1,13 @@
 import CLibSass
 
-class SassContext {
+public class SassContext {
 	fileprivate var cContext: OpaquePointer
+	var options: Options!
 	
 	fileprivate init(_ context: OpaquePointer) {
 		self.cContext = context
+		
+		self.options = Options(context: self)
 	}
 	
 	func compile() throws -> String {
@@ -60,66 +63,78 @@ final class SassFileContext: SassContext {
 	}
 }
 
-// Safe wrappers around LibSass getters and setters
+// MARK: - Sass context configuration options
+
 extension SassContext {
-	/// Precision for fractional numbers
-	var precision: Int32 {
-		get {
-			sass_option_get_precision(cContext)
+	public struct Options {
+		private unowned var context: SassContext
+		private var cContext: OpaquePointer { context.cContext }
+		
+		fileprivate init(context: SassContext) {
+			self.context = context
 		}
-		set {
-			sass_option_set_precision(cContext, newValue)
+		
+		// MARK: - Configuration computed properties
+		
+		/// Precision for fractional numbers
+		public var precision: Int32 {
+			get {
+				sass_option_get_precision(cContext)
+			}
+			set {
+				sass_option_set_precision(cContext, newValue)
+			}
 		}
-	}
-	
-	/// Sets the formatting for the compiled CSS
-	var outputStyle: SassOutputStyle {
-		get {
-			// FIXME: This forced unwrap may be unsafe
-			SassOutputStyle.init(rawValue: sass_option_get_output_style(cContext))!
+		
+		/// Sets the formatting for the compiled CSS
+		public var outputStyle: SassOutputStyle {
+			get {
+				// FIXME: This forced unwrap may be unsafe
+				SassOutputStyle.init(rawValue: sass_option_get_output_style(cContext))!
+			}
+			set {
+				sass_option_set_output_style(cContext, newValue.rawValue)
+			}
 		}
-		set {
-			sass_option_set_output_style(cContext, newValue.rawValue)
+		
+		/// Adds source comments to the compiled CSS
+		public var sourceComments: Bool {
+			get {
+				sass_option_get_source_comments(cContext)
+			}
+			set {
+				sass_option_set_source_comments(cContext, newValue)
+			}
 		}
-	}
-	
-	/// Adds source comments to the compiled CSS
-	var sourceComments: Bool {
-		get {
-			sass_option_get_source_comments(cContext)
+		
+		/// Selects between the newer SCSS syntax and the original indented syntax
+		public var syntaxType: SassSyntax {
+			get {
+				sass_option_get_is_indented_syntax_src(cContext) ? .indented : .scss
+			}
+			set {
+				sass_option_set_is_indented_syntax_src(cContext, newValue == .indented)
+			}
 		}
-		set {
-			sass_option_set_source_comments(cContext, newValue)
+		
+		/// String to be used for indentation
+		public var indentation: String {
+			get {
+				String(cString: sass_option_get_indent(cContext))
+			}
+			set {
+				sass_option_set_indent(cContext, sass_copy_c_string(newValue))
+			}
 		}
-	}
-	
-	/// Selects between the newer SCSS syntax and the original indented syntax
-	var syntaxType: SassSyntax {
-		get {
-			sass_option_get_is_indented_syntax_src(cContext) ? .indented : .scss
-		}
-		set {
-			sass_option_set_is_indented_syntax_src(cContext, newValue == .indented)
-		}
-	}
-	
-	/// String to be used for indentation
-	var indentation: String {
-		get {
-			String(cString: sass_option_get_indent(cContext))
-		}
-		set {
-			sass_option_set_indent(cContext, sass_copy_c_string(newValue))
-		}
-	}
-	
-	/// String to be used for line feeds
-	var lineFeed: String {
-		get {
-			String(cString: sass_option_get_linefeed(cContext))
-		}
-		set {
-			sass_option_set_linefeed(cContext, sass_copy_c_string(newValue))
+		
+		/// String to be used for line feeds
+		public var lineFeed: String {
+			get {
+				String(cString: sass_option_get_linefeed(cContext))
+			}
+			set {
+				sass_option_set_linefeed(cContext, sass_copy_c_string(newValue))
+			}
 		}
 	}
 }
