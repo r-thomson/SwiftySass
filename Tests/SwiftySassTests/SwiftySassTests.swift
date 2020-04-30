@@ -41,7 +41,7 @@ final class SwiftySassTests: XCTestCase {
 		
 		"""
 		
-		XCTAssertEqual(try compileSass(source: scss), targetCSS)
+		XCTAssertEqual(try compileSass(fromSource: scss), targetCSS)
 	}
 	
 	func testCompilerError() {
@@ -51,7 +51,7 @@ final class SwiftySassTests: XCTestCase {
 		}
 		"""
 		
-		XCTAssertThrowsError(try SwiftySass.compileSass(source: scss)) { error in
+		XCTAssertThrowsError(try SwiftySass.compileSass(fromSource: scss)) { error in
 			guard let error = error as? SassCompilerError else { return XCTFail() }
 			
 			XCTAssertEqual(error.description, "Undefined variable: \"$red\".")
