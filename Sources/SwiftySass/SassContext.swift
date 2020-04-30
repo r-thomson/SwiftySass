@@ -66,6 +66,7 @@ final class SassFileContext: SassContext {
 // MARK: - Sass context configuration options
 
 extension SassContext {
+	
 	public struct Options {
 		private unowned var context: SassContext
 		private var cContext: OpaquePointer { context.cContext }
@@ -76,7 +77,12 @@ extension SassContext {
 		
 		// MARK: - Configuration computed properties
 		
-		/// Precision for fractional numbers
+		/// Maximum digits of precision (after the decimal point) for numbers
+		///
+		/// The default value is 10.
+		///
+		/// # Reference
+		/// [Sass Documentation](https://sass-lang.com/documentation/values/numbers#precision)
 		public var precision: Int32 {
 			get {
 				sass_option_get_precision(cContext)
@@ -86,18 +92,26 @@ extension SassContext {
 			}
 		}
 		
-		/// Sets the formatting for the compiled CSS
-		public var outputStyle: SassOutputStyle {
+		/// Output formatting for the compiled CSS
+		///
+		/// The default value is `.nested`. For possible values, see `OutputStyle`.
+		public var outputStyle: OutputStyle {
 			get {
 				// FIXME: This forced unwrap may be unsafe
-				SassOutputStyle.init(rawValue: sass_option_get_output_style(cContext))!
+				OutputStyle.init(rawValue: sass_option_get_output_style(cContext))!
 			}
 			set {
 				sass_option_set_output_style(cContext, newValue.rawValue)
 			}
 		}
 		
-		/// Adds source comments to the compiled CSS
+		/// If source comments should be included in the compiled CSS
+		///
+		/// Source comments indicate where every rule was defined in the Sass source. The default
+		/// value is `false`.
+		///
+		/// # Reference
+		/// [Sass Documentation](https://sass-lang.com/documentation/js-api#sourcecomments)
 		public var sourceComments: Bool {
 			get {
 				sass_option_get_source_comments(cContext)
@@ -108,7 +122,9 @@ extension SassContext {
 		}
 		
 		/// Selects between the newer SCSS syntax and the original indented syntax
-		public var syntaxType: SassSyntax {
+		///
+		/// The default value is `.scss`.
+		public var syntaxType: SyntaxType {
 			get {
 				sass_option_get_is_indented_syntax_src(cContext) ? .indented : .scss
 			}
@@ -117,7 +133,9 @@ extension SassContext {
 			}
 		}
 		
-		/// String to be used for indentation
+		/// String to be used for indentation in the CSS output
+		///
+		/// The default value is two spaces (`"  "`). Has no effect with the "compressed" output style.
 		public var indentation: String {
 			get {
 				String(cString: sass_option_get_indent(cContext))
@@ -127,7 +145,9 @@ extension SassContext {
 			}
 		}
 		
-		/// String to be used for line feeds
+		/// String to be used for line feeds in the CSS output
+		///
+		/// The default value is the newline character (`"\n"`).
 		public var lineFeed: String {
 			get {
 				String(cString: sass_option_get_linefeed(cContext))
@@ -137,4 +157,5 @@ extension SassContext {
 			}
 		}
 	}
+	
 }

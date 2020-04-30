@@ -8,7 +8,7 @@ final class ContextOptionsTests: XCTestCase {
 		context.options.precision = 6
 		XCTAssertEqual(context.options.precision, 6)
 		
-		for style in [SassOutputStyle.nested, .expanded, .compact, .compressed] {
+		for style in [SassContext.Options.OutputStyle.nested, .expanded, .compact, .compressed] {
 			context.options.outputStyle = style
 			XCTAssertEqual(context.options.outputStyle, style)
 		}
@@ -16,7 +16,7 @@ final class ContextOptionsTests: XCTestCase {
 		context.options.sourceComments = true
 		XCTAssertEqual(context.options.sourceComments, true)
 		
-		for style in [SassSyntax.scss, .indented] {
+		for style in [SassContext.Options.SyntaxType.scss, .indented] {
 			context.options.syntaxType = style
 			XCTAssertEqual(context.options.syntaxType, style)
 		}
