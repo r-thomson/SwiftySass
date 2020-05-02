@@ -18,7 +18,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - run: brew install libsass
+    - run: brew update && brew install libsass
     - name: Build
       run: swift build -v
     - name: Tests
