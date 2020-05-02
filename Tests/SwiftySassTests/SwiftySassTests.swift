@@ -3,7 +3,7 @@ import SwiftySass
 
 final class SwiftySassTests: XCTestCase {
 	func testVersionNumbers() {
-		XCTAssertEqual(SwiftySass.libSassVersion, "3.6.3")
+		XCTAssertEqual(SwiftySass.libSassVersion, "3.6.4")
 		XCTAssertEqual(SwiftySass.sassLanguageVersion, "3.5")
 	}
 	
