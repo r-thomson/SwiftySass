@@ -2,12 +2,13 @@
 
 A [LibSass](https://github.com/sass/libsass) wrapper for Swift.
 
-[![Latest version](https://img.shields.io/github/v/tag/r-thomson/SwiftySass?sort=semver&label=Latest&style=for-the-badge)](https://github.com/r-thomson/SwiftySass/releases)
-[![Test status](https://img.shields.io/github/workflow/status/r-thomson/SwiftySass/Swift?label=Tests&style=for-the-badge)](https://github.com/r-thomson/SwiftySass/actions)
+[![](https://img.shields.io/static/v1?label=Platforms&message=macOS&color=lightgrey&style=for-the-badge "Officially supported platforms")](https://github.com/r-thomson/SwiftySass)
+[![](https://img.shields.io/github/v/tag/r-thomson/SwiftySass?sort=semver&label=Latest&style=for-the-badge  "Latest release version")](https://github.com/r-thomson/SwiftySass/releases)
+[![](https://img.shields.io/github/workflow/status/r-thomson/SwiftySass/Swift?label=Tests&style=for-the-badge  "Build & test status (master)")](https://github.com/r-thomson/SwiftySass/actions)
 
 This project is not yet finished, so some features are not yet supported:
 
-- Compiler configuration
+- All configuration options
 - Linux support
 - Custom Sass functions
 - Custom Sass importers
