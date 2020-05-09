@@ -26,6 +26,18 @@ final class ContextOptionsTests: XCTestCase {
 		
 		context.options.lineFeed = "\n\n"
 		XCTAssertEqual(context.options.lineFeed, "\n\n")
+		
+		let paths = [URL(fileURLWithPath: "/foo"), URL(fileURLWithPath: "/bar/baz")]
+		
+		context.options.addIncludePaths(paths)
+		context.options.includePaths.enumerated().forEach { (i, url) in
+			XCTAssertEqual(url, paths[i])
+		}
+		
+		context.options.addPluginPaths(paths)
+		context.options.pluginPaths.enumerated().forEach { (i, url) in
+			XCTAssertEqual(url, paths[i])
+		}
 	}
 	
 	func testPrecisionOption() {
@@ -184,4 +196,8 @@ final class ContextOptionsTests: XCTestCase {
 		"""
 		XCTAssertEqual(try! context.compile(), target)
 	}
+	
+	// TODO: Add test for include paths
+	
+	// TODO: Add test for plugin paths
 }

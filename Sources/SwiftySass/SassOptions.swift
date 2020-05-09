@@ -1,4 +1,5 @@
 import CLibSass
+import Foundation
 
 public struct SassOptions {
 	private unowned var context: SassContext
@@ -88,5 +89,41 @@ public struct SassOptions {
 		set {
 			sass_option_set_linefeed(cContext, sass_copy_c_string(newValue))
 		}
+	}
+	
+	// TODO: Add documentation
+	
+	public var includePaths: [URL] {
+		get {
+			Array(0..<sass_option_get_include_path_size(cContext))
+				.map { sass_option_get_include_path(cContext, $0) }
+				.map { URL(fileURLWithPath: String(cString: $0)) }
+		}
+	}
+	
+	public func addIncludePath(_ url: URL) {
+		sass_option_push_include_path(cContext, sass_copy_c_string(url.path))
+	}
+	
+	public func addIncludePaths(_ urls: [URL]) {
+		urls.forEach { addIncludePath($0) }
+	}
+	
+	// TODO: Add documentation
+	
+	public var pluginPaths: [URL] {
+		get {
+			Array(0..<sass_option_get_plugin_path_size(cContext))
+				.map { sass_option_get_plugin_path(cContext, $0) }
+				.map { URL(fileURLWithPath: String(cString: $0)) }
+		}
+	}
+	
+	public func addPluginPath(_ url: URL) {
+		sass_option_push_plugin_path(cContext, sass_copy_c_string(url.path))
+	}
+	
+	public func addPluginPaths(_ urls: [URL]) {
+		urls.forEach { addPluginPath($0) }
 	}
 }
