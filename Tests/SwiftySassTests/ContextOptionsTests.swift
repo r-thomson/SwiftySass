@@ -8,7 +8,7 @@ final class ContextOptionsTests: XCTestCase {
 		context.options.precision = 6
 		XCTAssertEqual(context.options.precision, 6)
 		
-		for style in [SassContext.Options.OutputStyle.nested, .expanded, .compact, .compressed] {
+		for style in [SassOptions.OutputStyle.nested, .expanded, .compact, .compressed] {
 			context.options.outputStyle = style
 			XCTAssertEqual(context.options.outputStyle, style)
 		}
@@ -16,7 +16,7 @@ final class ContextOptionsTests: XCTestCase {
 		context.options.sourceComments = true
 		XCTAssertEqual(context.options.sourceComments, true)
 		
-		for style in [SassContext.Options.SyntaxType.scss, .indented] {
+		for style in [SassOptions.SyntaxType.scss, .indented] {
 			context.options.syntaxType = style
 			XCTAssertEqual(context.options.syntaxType, style)
 		}
@@ -49,7 +49,7 @@ final class ContextOptionsTests: XCTestCase {
 	}
 	
 	func testOutputStyle() {
-		typealias OutputStyle = SassContext.Options.OutputStyle
+		typealias OutputStyle = SassOptions.OutputStyle
 		
 		let scss = """
 		body {
@@ -99,7 +99,7 @@ final class ContextOptionsTests: XCTestCase {
 	}
 	
 	func testSyntaxType() {
-		typealias SyntaxType = SassContext.Options.SyntaxType
+		typealias SyntaxType = SassOptions.SyntaxType
 		
 		let target = """
 		ul {

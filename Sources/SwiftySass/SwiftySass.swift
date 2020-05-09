@@ -19,7 +19,7 @@ public var sassLanguageVersion: String {
 /// - Returns: The compiled CSS as a String.
 public func compileSass(
 	fromSource source: String,
-	with config: ((inout SassContext.Options) -> Void)? = nil
+	with config: ((inout SassOptions) -> Void)? = nil
 ) throws -> String {
 	let context = SassDataContext(sourceString: source)
 	config?(&context.options)
@@ -34,7 +34,7 @@ public func compileSass(
 /// - Returns: The compiled CSS as a String.
 public func compileSass(
 	fromFile file: URL,
-	with config: ((inout SassContext.Options) -> Void)? = nil
+	with config: ((inout SassOptions) -> Void)? = nil
 ) throws -> String {
 	let context = SassFileContext(inputPath: file.path)
 	config?(&context.options)
