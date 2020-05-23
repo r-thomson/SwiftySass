@@ -29,12 +29,12 @@ final class ContextOptionsTests: XCTestCase {
 		
 		let paths = [URL(fileURLWithPath: "/foo"), URL(fileURLWithPath: "/bar/baz")]
 		
-		context.options.addIncludePaths(paths)
+		context.options.addIncludePaths(paths[0], paths[1])
 		context.options.includePaths.enumerated().forEach { (i, url) in
 			XCTAssertEqual(url, paths[i])
 		}
 		
-		context.options.addPluginPaths(paths)
+		context.options.addPluginPaths(paths[0], paths[1])
 		context.options.pluginPaths.enumerated().forEach { (i, url) in
 			XCTAssertEqual(url, paths[i])
 		}

@@ -101,12 +101,10 @@ public struct SassOptions {
 		}
 	}
 	
-	public func addIncludePath(_ url: URL) {
-		sass_option_push_include_path(cContext, sass_copy_c_string(url.path))
-	}
-	
-	public func addIncludePaths(_ urls: [URL]) {
-		urls.forEach { addIncludePath($0) }
+	public func addIncludePaths(_ urls: URL...) {
+		urls.forEach {
+			sass_option_push_include_path(cContext, sass_copy_c_string($0.path))
+		}
 	}
 	
 	// TODO: Add documentation
@@ -119,11 +117,9 @@ public struct SassOptions {
 		}
 	}
 	
-	public func addPluginPath(_ url: URL) {
-		sass_option_push_plugin_path(cContext, sass_copy_c_string(url.path))
-	}
-	
-	public func addPluginPaths(_ urls: [URL]) {
-		urls.forEach { addPluginPath($0) }
+	public func addPluginPaths(_ urls: URL...) {
+		urls.forEach {
+			sass_option_push_plugin_path(cContext, sass_copy_c_string($0.path))
+		}
 	}
 }
