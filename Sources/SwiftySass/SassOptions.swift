@@ -91,8 +91,9 @@ public struct SassOptions {
 		}
 	}
 	
-	// TODO: Add documentation
-	
+	/// File paths that are used when resolving `@import` rules in Sass
+	///
+	/// This property is *read-only*. To add include paths, use the `addIncludePaths` function.
 	public var includePaths: [URL] {
 		get {
 			Array(0..<sass_option_get_include_path_size(cContext))
@@ -101,6 +102,14 @@ public struct SassOptions {
 		}
 	}
 	
+	/// Adds additional paths to use when resolving `@import` rules in Sass
+	///
+	/// Note that include paths cannot be removed once added.
+	///
+	/// - Parameter urls: URL(s) to add
+	///
+	/// # Reference
+	/// [Sass Documentation](https://sass-lang.com/documentation/at-rules/import#load-paths)
 	public func addIncludePaths(_ urls: URL...) {
 		urls.forEach {
 			sass_option_push_include_path(cContext, sass_copy_c_string($0.path))
