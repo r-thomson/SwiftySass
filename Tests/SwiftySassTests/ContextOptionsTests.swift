@@ -33,11 +33,6 @@ final class ContextOptionsTests: XCTestCase {
 		context.options.includePaths.enumerated().forEach { (i, url) in
 			XCTAssertEqual(url, paths[i])
 		}
-		
-		context.options.addPluginPaths(paths[0], paths[1])
-		context.options.pluginPaths.enumerated().forEach { (i, url) in
-			XCTAssertEqual(url, paths[i])
-		}
 	}
 	
 	func testPrecisionOption() {
