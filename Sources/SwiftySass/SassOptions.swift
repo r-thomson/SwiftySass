@@ -106,20 +106,4 @@ public struct SassOptions {
 			sass_option_push_include_path(cContext, sass_copy_c_string($0.path))
 		}
 	}
-	
-	// TODO: Add documentation
-	
-	public var pluginPaths: [URL] {
-		get {
-			Array(0..<sass_option_get_plugin_path_size(cContext))
-				.map { sass_option_get_plugin_path(cContext, $0) }
-				.map { URL(fileURLWithPath: String(cString: $0)) }
-		}
-	}
-	
-	public func addPluginPaths(_ urls: URL...) {
-		urls.forEach {
-			sass_option_push_plugin_path(cContext, sass_copy_c_string($0.path))
-		}
-	}
 }
