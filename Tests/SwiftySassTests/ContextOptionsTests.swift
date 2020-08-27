@@ -29,8 +29,8 @@ final class ContextOptionsTests: XCTestCase {
 		
 		let paths = [URL(fileURLWithPath: "/foo"), URL(fileURLWithPath: "/bar/baz")]
 		
-		context.options.addIncludePaths(paths[0], paths[1])
-		context.options.includePaths.enumerated().forEach { (i, url) in
+		context.options.addLoadPaths(paths[0], paths[1])
+		context.options.loadPaths.enumerated().forEach { (i, url) in
 			XCTAssertEqual(url, paths[i])
 		}
 	}
@@ -192,16 +192,16 @@ final class ContextOptionsTests: XCTestCase {
 		XCTAssertEqual(try! context.compile(), target)
 	}
 	
-	func testIncludePaths() {
-		let inputURL = TestResources.url(forResourceAtPath: "IncludePaths/input.scss")
-		let targetURL = TestResources.url(forResourceAtPath: "IncludePaths/target.css")
+	func testLoadPaths() {
+		let inputURL = TestResources.url(forResourceAtPath: "LoadPaths/input.scss")
+		let targetURL = TestResources.url(forResourceAtPath: "LoadPaths/target.css")
 		
-		// This should fail because the include path for vars.scss hasn't been specified
+		// This should fail because the load path for vars.scss hasn't been specified
 		XCTAssertThrowsError(try compileSass(fromFile: inputURL))
 		
 		do {
 			let compiled = try compileSass(fromFile: inputURL) { options in
-				options.addIncludePaths(TestResources.url(forResourceAtPath: "IncludePaths/lib/"))
+				options.addLoadPaths(TestResources.url(forResourceAtPath: "LoadPaths/lib/"))
 			}
 			
 			XCTAssertEqual(compiled, try String(contentsOf: targetURL))
