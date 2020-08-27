@@ -36,6 +36,8 @@ public func compileSass(
 	fromFile file: URL,
 	with config: ((inout SassOptions) -> Void)? = nil
 ) throws -> String {
+	assert(file.isFileURL, "URLs passed to \(#function) must be file paths")
+	
 	let context = SassFileContext(inputPath: file.path)
 	config?(&context.options)
 	return try context.compile()

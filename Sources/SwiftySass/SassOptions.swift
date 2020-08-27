@@ -112,6 +112,8 @@ public struct SassOptions {
 	/// [Sass Documentation](https://sass-lang.com/documentation/at-rules/import#load-paths)
 	public func addIncludePaths(_ urls: URL...) {
 		urls.forEach {
+			assert($0.isFileURL, "URLs passed to \(#function) must be file paths")
+			
 			sass_option_push_include_path(cContext, sass_copy_c_string($0.path))
 		}
 	}
