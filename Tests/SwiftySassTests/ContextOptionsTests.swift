@@ -26,6 +26,13 @@ final class ContextOptionsTests: XCTestCase {
 		
 		context.options.lineFeed = "\n\n"
 		XCTAssertEqual(context.options.lineFeed, "\n\n")
+		
+		let paths = [URL(fileURLWithPath: "/foo"), URL(fileURLWithPath: "/bar/baz")]
+		
+		context.options.addLoadPaths(paths[0], paths[1])
+		context.options.loadPaths.enumerated().forEach { (i, url) in
+			XCTAssertEqual(url, paths[i])
+		}
 	}
 	
 	func testPrecisionOption() {
@@ -183,5 +190,23 @@ final class ContextOptionsTests: XCTestCase {
 		
 		"""
 		XCTAssertEqual(try! context.compile(), target)
+	}
+	
+	func testLoadPaths() {
+		let inputURL = TestResources.url(forResourceAtPath: "LoadPaths/input.scss")
+		let targetURL = TestResources.url(forResourceAtPath: "LoadPaths/target.css")
+		
+		// This should fail because the load path for vars.scss hasn't been specified
+		XCTAssertThrowsError(try compileSass(fromFile: inputURL))
+		
+		do {
+			let compiled = try compileSass(fromFile: inputURL) { options in
+				options.addLoadPaths(TestResources.url(forResourceAtPath: "LoadPaths/lib/"))
+			}
+			
+			XCTAssertEqual(compiled, try String(contentsOf: targetURL))
+		} catch {
+			XCTFail(error.localizedDescription)
+		}
 	}
 }

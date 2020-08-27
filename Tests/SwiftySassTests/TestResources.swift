@@ -4,7 +4,7 @@ import Foundation
 /// [(yet)](https://bit.ly/2UPouzJ ). This utility struct abuses `#file` as
 /// a workaround to access resources in the `SwiftySassTestResources` directory.
 /// The interface is similar to `Bundle`.
-struct TestResources {
+enum TestResources {
 	static let resourceDirectory = URL(fileURLWithPath: #file)
 		.deletingLastPathComponent() // SwiftySass/Tests/SwiftySassTests/
 		.deletingLastPathComponent() // SwiftySass/Tests/

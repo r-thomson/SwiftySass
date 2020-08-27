@@ -1,4 +1,5 @@
 import CLibSass
+import Foundation
 
 public struct SassOptions {
 	private unowned var context: SassContext
@@ -87,6 +88,33 @@ public struct SassOptions {
 		}
 		set {
 			sass_option_set_linefeed(cContext, sass_copy_c_string(newValue))
+		}
+	}
+	
+	/// File paths that are used when resolving `@import` rules in Sass
+	///
+	/// This property is *read-only*. To add load paths, use the `addLoadPaths` function.
+	public var loadPaths: [URL] {
+		get {
+			Array(0..<sass_option_get_include_path_size(cContext))
+				.map { sass_option_get_include_path(cContext, $0) }
+				.map { URL(fileURLWithPath: String(cString: $0)) }
+		}
+	}
+	
+	/// Adds additional paths to use when resolving `@import` rules in Sass
+	///
+	/// Note that load paths cannot be removed once added.
+	///
+	/// - Parameter urls: URL(s) to add
+	///
+	/// # Reference
+	/// [Sass Documentation](https://sass-lang.com/documentation/at-rules/import#load-paths)
+	public func addLoadPaths(_ urls: URL...) {
+		urls.forEach {
+			assert($0.isFileURL, "URLs passed to \(#function) must be file paths")
+			
+			sass_option_push_include_path(cContext, sass_copy_c_string($0.path))
 		}
 	}
 }
