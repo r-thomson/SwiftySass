@@ -192,7 +192,21 @@ final class ContextOptionsTests: XCTestCase {
 		XCTAssertEqual(try! context.compile(), target)
 	}
 	
-	// TODO: Add test for include paths
-	
-	// TODO: Add test for plugin paths
+	func testIncludePaths() {
+		let inputURL = TestResources.url(forResourceAtPath: "IncludePaths/input.scss")
+		let targetURL = TestResources.url(forResourceAtPath: "IncludePaths/target.css")
+		
+		// This should fail because the include path for vars.scss hasn't been specified
+		XCTAssertThrowsError(try compileSass(fromFile: inputURL))
+		
+		do {
+			let compiled = try compileSass(fromFile: inputURL) { options in
+				options.addIncludePaths(TestResources.url(forResourceAtPath: "IncludePaths/lib/"))
+			}
+			
+			XCTAssertEqual(compiled, try String(contentsOf: targetURL))
+		} catch {
+			XCTFail(error.localizedDescription)
+		}
+	}
 }
