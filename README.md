@@ -1,21 +1,16 @@
 # SwiftySass
 
-A [LibSass](https://github.com/sass/libsass) wrapper for Swift.
+A [LibSass](https://github.com/sass/libsass) wrapper for Swift. SwiftySass allows you to compile Sass code from Swift.
 
 [![](https://img.shields.io/static/v1?label=Platforms&message=macOS&color=lightgrey&style=for-the-badge "Officially supported platforms")](https://github.com/r-thomson/SwiftySass)
 [![](https://img.shields.io/github/v/tag/r-thomson/SwiftySass?sort=semver&label=Latest&style=for-the-badge  "Latest release version")](https://github.com/r-thomson/SwiftySass/releases)
 [![](https://img.shields.io/github/workflow/status/r-thomson/SwiftySass/Swift?label=Tests&style=for-the-badge  "Build & test status (master)")](https://github.com/r-thomson/SwiftySass/actions)
 
-This project is not yet finished, so some features are not yet supported:
-
-- All configuration options
-- Linux support
-- Custom Sass functions
-- Custom Sass importers
+This project is not yet finished, so some features are not yet supported. For more information, please see [the 1.0 release milestone](https://github.com/r-thomson/SwiftySass/milestone/1).
 
 ## Installation
 
-First, you also need to have LibSass installed on your system. SwifySass expects the installation to be located at `/usr/local/include/`. Using [Homebrew](https://brew.sh) is suggested:
+First, you need to have LibSass installed on your system. SwifySass expects the installation to be located at `/usr/local/include/`. Using [Homebrew](https://brew.sh) is suggested:
 
 ```sh
 brew install libsass
