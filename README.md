@@ -19,7 +19,7 @@ brew install libsass
 SwiftySass can be installed using [Swift Package Manager](https://swift.org/package-manager/). To use SwiftySass in a project, add it to the `dependencies` section in your project’s `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/r-thomson/SwiftySass", from: "0.1.0")
+.package(url: "https://github.com/r-thomson/SwiftySass", from: "0.3.0")
 ```
 
 ## Usage
@@ -27,12 +27,16 @@ SwiftySass can be installed using [Swift Package Manager](https://swift.org/pack
 ```swift
 import SwiftySass
 
+// Compile from a string...
 let scss = """
 $primary-color: #222;
 body {
   color: $primary-color;
 }
 """
+var css = try? compileSass(fromSource: scss)
 
-let css = try? compileSass(source: scss)
+// ...or from a file
+let fileURL = URL(fileURLWithPath: "./style.scss")
+css = try? compileSass(fromFile: fileURL)
 ```
