@@ -6,7 +6,8 @@ A [LibSass](https://github.com/sass/libsass) wrapper for Swift. SwiftySass allow
 [![](https://img.shields.io/github/v/tag/r-thomson/SwiftySass?sort=semver&label=Latest&style=for-the-badge  "Latest release version")](https://github.com/r-thomson/SwiftySass/releases)
 [![](https://img.shields.io/github/workflow/status/r-thomson/SwiftySass/Swift?label=Tests&style=for-the-badge  "Build & test status (master)")](https://github.com/r-thomson/SwiftySass/actions)
 
-This project is not yet finished, so some features are not yet supported. For more information, please see [the 1.0 release milestone](https://github.com/r-thomson/SwiftySass/milestone/1).
+
+**[As of October 2020, LibSass is deprecated](https://sass-lang.com/blog/libsass-is-deprecated).** I am unsure what that currently means for the future of this project. For the time being, I am not planning on continuing work on SwiftySass.
 
 ## Installation
 
